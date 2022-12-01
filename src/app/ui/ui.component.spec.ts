@@ -298,3 +298,101 @@ describe('Ui multiplication - Component', () => {
 
 });
 
+//DIVISION
+describe('Ui division - Component', () => {
+  let component: UiComponent;
+  let fixture: ComponentFixture<UiComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ UiComponent ],
+      imports: [FormsModule],
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(UiComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('Should call division method', () => {
+     // Arrange
+     let result = 0;
+     component.operator1 = 9;
+     component.operator2 = 3;
+ 
+     // Act
+     component.division();
+     result = component.result;
+ 
+     // Assert
+     expect(result).toBe(3);
+  });
+
+
+
+  it('Should set operator1 model through ngModel', async() => {
+    // Arrange 
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const inputElement = fixture.debugElement.query(By.css('input[name="operator1"]')).nativeElement;
+
+    // Act 
+    inputElement.value = '7';
+    inputElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    // Assert 
+    expect(component.operator1).toEqual(7);
+  });
+ 
+  it('Should set operator2 model through ngModel', async() => {
+    // Arrange 
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const inputElement = fixture.debugElement.query(By.css('input[name="operator2"]')).nativeElement;
+
+    // Act 
+    inputElement.value = '5.2';
+    inputElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    // Assert 
+    expect(component.operator2).toEqual(5.2);
+  });
+
+
+  it('should division operator1 and operator2 when i click the division button ', () => {
+    // Arrange 
+    component.operator1 = 12;
+    component.operator2 = 3;
+    let divisionButton = fixture.debugElement.query(By.css('.division-button'));
+
+    // Act
+    divisionButton.triggerEventHandler('click', null);
+
+    // Assert
+    expect(component.result).toBe(4);
+
+   });
+
+  it('Should render divi in result div', () => {
+    // Arrange
+    component.operator1 = 7;
+    component.operator2 = 2;
+ 
+    // Act
+    component.division();
+    fixture.detectChanges();
+    
+    let de = fixture.debugElement.query(By.css('.result'));
+    let el : HTMLElement = de.nativeElement;
+
+    // Assert
+    expect(el.innerText).toContain('3.5');
+     
+  });
+
+});

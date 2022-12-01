@@ -34,3 +34,14 @@
     color: green;
 }
 
+.multiplication-button {
+    cursor: pointer;
+    color: aqua;
+}
+
+.division-button {
+    cursor: pointer;
+    color: brown;
+    font-weight: 1000;
+    font-size: 20px;
+}

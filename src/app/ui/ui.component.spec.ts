@@ -575,3 +575,83 @@ describe('Ui exponente - Component', () => {
   });
 
 });
+
+//RAIZ CUADRADA
+describe('Ui sqrt - Component', () => {
+  let component: UiComponent;
+  let fixture: ComponentFixture<UiComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ UiComponent ],
+      imports: [FormsModule],
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(UiComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('Should call raiz method', () => {
+     // Arrange
+     let result = 0;
+     component.operator1 = 9;
+ 
+     // Act
+     component.sqrt();
+     result = component.result;
+ 
+     // Assert
+     expect(result).toBe(3);
+  });
+
+
+
+  it('Should set operator1 model through ngModel', async() => {
+    // Arrange 
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const inputElement = fixture.debugElement.query(By.css('input[name="operator1"]')).nativeElement;
+
+    // Act 
+    inputElement.value = '3';
+    inputElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    // Assert 
+    expect(component.operator1).toEqual(3);
+  });
+
+  it('should sqrt operator1 when i click the raiz button ', () => {
+    // Arrange 
+    component.operator1 = 16;
+    let sqrtButton = fixture.debugElement.query(By.css('.raiz-button'));
+
+    // Act
+    sqrtButton.triggerEventHandler('click', null);
+
+    // Assert
+    expect(component.result).toBe(4);
+
+   });
+
+  it('Should render sqrt in result div', () => {
+    // Arrange
+    component.operator1 = 5;
+ 
+    // Act
+    component.sqrt();
+    fixture.detectChanges();
+    
+    let de = fixture.debugElement.query(By.css('.result'));
+    let el : HTMLElement = de.nativeElement;
+
+    // Assert
+    expect(el.innerText).toContain('2.236067977');
+     
+  });
+
+});

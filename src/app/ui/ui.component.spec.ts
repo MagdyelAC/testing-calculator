@@ -396,3 +396,83 @@ describe('Ui division - Component', () => {
   });
 
 });
+
+//EXP-CUADRADO
+describe('Ui exp-cuadrado - Component', () => {
+  let component: UiComponent;
+  let fixture: ComponentFixture<UiComponent>;
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ UiComponent ],
+      imports: [FormsModule],
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(UiComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('Should call exp-cuadrado method', () => {
+     // Arrange
+     let result = 0;
+     component.operator1 = 9;
+ 
+     // Act
+     component.sqr();
+     result = component.result;
+ 
+     // Assert
+     expect(result).toBe(81);
+  });
+
+
+
+  it('Should set operator1 model through ngModel', async() => {
+    // Arrange 
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const inputElement = fixture.debugElement.query(By.css('input[name="operator1"]')).nativeElement;
+
+    // Act 
+    inputElement.value = '4';
+    inputElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+
+    // Assert 
+    expect(component.operator1).toEqual(4);
+  });
+
+  it('should exp-cuadrado operator1 when i click the exp-cuadrado button ', () => {
+    // Arrange 
+    component.operator1 = 7;
+    let cuadradoButton = fixture.debugElement.query(By.css('.exp-cuadrado-button'));
+
+    // Act
+    cuadradoButton.triggerEventHandler('click', null);
+
+    // Assert
+    expect(component.result).toBe(49);
+
+   });
+
+  it('Should render exp-cuad in result div', () => {
+    // Arrange
+    component.operator1 = 5;
+ 
+    // Act
+    component.sqr();
+    fixture.detectChanges();
+    
+    let de = fixture.debugElement.query(By.css('.result'));
+    let el : HTMLElement = de.nativeElement;
+
+    // Assert
+    expect(el.innerText).toContain('25');
+     
+  });
+
+});

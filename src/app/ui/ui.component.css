@@ -45,3 +45,10 @@
     font-weight: 1000;
     font-size: 20px;
 }
+
+.exp-cuadrado-button {
+    cursor: pointer;
+    color: chartreuse;
+    font-weight: 1000;
+    font-size: 20px;
+}
